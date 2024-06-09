@@ -7,7 +7,8 @@ import 'login_screen.dart';
 
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+   const RegistrationScreen({super.key});
+
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -18,12 +19,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
   bool showProgessBar = false;
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Center(
+        child: Form(
+         key:  _formkey,
           child: Column(
             children: [
               const SizedBox(
@@ -49,6 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: InputTextWidget(
+                  emptyText: "Username is required",
                   textEditingController: userNameEditingController,
                   labelString: 'Username',
                   isObscure: false,
@@ -62,7 +66,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: InputTextWidget(
-                  textEditingController: userNameEditingController,
+                  emptyText: "Email is required",
+                  textEditingController: emailEditingController,
                   labelString: 'Email',
                   isObscure: false,
                   iconData: Icons.email_outlined,
@@ -75,7 +80,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: InputTextWidget(
-                  textEditingController: userNameEditingController,
+                  emptyText: "Password is required",
+                  textEditingController: passwordEditingController,
                   labelString: 'Password',
                   isObscure: true,
                   iconData: Icons.lock_outline,
@@ -91,13 +97,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     width: MediaQuery.of(context).size.width - 38,
                     height: 54,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(10)),
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          showProgessBar = true;
-                        });
+                        if (_formkey.currentState!.validate()){
+                          setState(() {
+                            showProgessBar = true;
+                          });
+                          print("valid");
+                        }else{
+                          print("not valid");
+                        }
                       },
                       child: const Center(
                         child: Text(
@@ -120,8 +131,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Colors.amber,
                   Colors.blueAccent
                 ],
-                backColor: Colors.white30,
-                animationDuration: 30,
+                backColor: Colors.white70,
+                animationDuration: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -141,7 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       "Login Now",
                       style: TextStyle(
                         fontSize: 18,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
