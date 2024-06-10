@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/controllers/auth_controller.dart';
 import 'package:shop_app/views/screens/auth/registration_screen.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
@@ -18,7 +19,16 @@ TextEditingController emailTextEditingController = TextEditingController();
 TextEditingController passwordEditingController = TextEditingController();
 bool showprogressBar = false;
 final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+final AuthController _authController = AuthController();
 
+loginUser()async{
+  if(_formkey.currentState!.validate()){
+   String res = await _authController.loginUser(emailTextEditingController.text, passwordEditingController.text);
+  if(res == 'success'){
+    print("Logged in");
+  }
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,14 +89,16 @@ final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
                         ),
                         child: InkWell(
                           onTap: (){
-                            if(_formkey.currentState!.validate()){
-                              setState(() {
-                                showprogressBar = true;
-                              });
-                              print("valid");
-                            }else{
-                              print("invalid");
-                            }
+                            loginUser();
+                            print("object");
+                            // if(_formkey.currentState!.validate()){
+                            //   setState(() {
+                            //     showprogressBar = true;
+                            //   });
+                            //   print("valid");
+                            // }else{
+                            //   print("invalid");
+                            // }
                           },
                           child: const Center(
                             child: Text(
