@@ -47,9 +47,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           key: _formkey,
           child: Column(
             children: [
-              const SizedBox(
-                height: 30,
-              ),
+              30.height,
               GestureDetector(
                 onTap: galleryImage,
                 child: _image == null
@@ -65,9 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   backgroundImage: MemoryImage(_image!),
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              15.height,
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -79,9 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   iconData: Icons.person_outline,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              10.height,
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -93,9 +87,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   iconData: Icons.email_outlined,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              10.height,
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -107,9 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   iconData: Icons.lock_outline,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+             20.height,
               showProgessBar == false
                   ? Column(
                 children: [
@@ -136,7 +126,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           });
 
                           if (res == 'success') {
-                            Get.to(() => LoginScreen());
+                            Get.to(() => const LoginScreen());
                           } else {
                             print("Error: $res");
                           }

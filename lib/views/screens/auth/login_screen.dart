@@ -15,20 +15,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-TextEditingController emailTextEditingController = TextEditingController();
-TextEditingController passwordEditingController = TextEditingController();
-bool showprogressBar = false;
-final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-final AuthController _authController = AuthController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+  bool showprogressBar = false;
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController();
 
-loginUser()async{
-  if(_formkey.currentState!.validate()){
-   String res = await _authController.loginUser(emailTextEditingController.text, passwordEditingController.text);
-  if(res == 'success'){
-    print("Logged in");
+  loginUser() async {
+    if (_formkey.currentState!.validate()) {
+      setState(() {
+        showprogressBar = true;
+      });
+      String res = await _authController.loginUser(emailTextEditingController.text, passwordEditingController.text);
+      setState(() {
+        showprogressBar = false;
+      });
+      if (res == 'success') {
+        Get.snackbar("Login Success", "You are now login", backgroundColor: Colors.blue);
+      } else {
+        Get.snackbar("Error Occured", res.toString(), backgroundColor: Colors.red);
+      }
+    }
   }
-  }
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,20 +48,17 @@ loginUser()async{
             child: Form(
               key: _formkey,
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 200,
-                  ),
-                 const Text(
+                 200.height,
+                  const Text(
                     "Login Screen",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22.0,
-                      letterSpacing: 4
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22.0,
+                        letterSpacing: 4
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  10.height,
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -64,7 +70,7 @@ loginUser()async{
                       isObscure: false,
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  10.height,
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -76,44 +82,38 @@ loginUser()async{
                       isObscure: true,
                     ),
                   ),
-                  const SizedBox(height: 30,),
-                  showprogressBar == false?
-                  Column(
+                  30.height,
+                  showprogressBar == false
+                      ? Column(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width - 50,
+                        width: MediaQuery.of(context).size.width - 50 > 0 ? MediaQuery.of(context).size.width - 50 : 0,
                         height: 40,
                         decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10)
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: InkWell(
-                          onTap: (){
-                            loginUser();
-                            print("object");
-                            // if(_formkey.currentState!.validate()){
-                            //   setState(() {
-                            //     showprogressBar = true;
-                            //   });
-                            //   print("valid");
-                            // }else{
-                            //   print("invalid");
-                            // }
+                          onTap: () {
+                            if (_formkey.currentState!.validate()) {
+                              loginUser();
+                            }
                           },
                           child: const Center(
                             child: Text(
                               "Login",
                               style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
                         ),
                       )
                     ],
-                  ):const SimpleCircularProgressBar(
+                  )
+                      : const SimpleCircularProgressBar(
                     progressColors: [
                       Colors.green,
                       Colors.blue,
@@ -122,12 +122,12 @@ loginUser()async{
                       Colors.blueAccent
                     ],
                     backColor: Colors.white30,
-                    animationDuration: 10,
+                    animationDuration: 3,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Not have an Account? ",style: TextStyle(
+                      const Text("Not have an Account? ", style: TextStyle(
                           color: Colors.grey,
                           fontSize: 16
                       ),),
@@ -135,7 +135,7 @@ loginUser()async{
                         onTap: () {
                           Get.to(() => const RegistrationScreen());
                         },
-                        child: const Text("SignUp Now",style: TextStyle(
+                        child: const Text("SignUp Now", style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.bold
