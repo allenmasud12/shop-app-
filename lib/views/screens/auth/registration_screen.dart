@@ -128,7 +128,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           if (res == 'success') {
                             Get.to(() => const LoginScreen());
                           } else {
-                            print("Error: $res");
                           }
                         } else {
                           print("not valid");
