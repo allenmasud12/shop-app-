@@ -32,7 +32,7 @@ class _BannerWidgetState extends State<BannerWidget> {
     return CarouselSlider(
         items: _bannerList.map((e){
           return Builder(builder: (context){
-            return Container(
+            return SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Image.network(e,fit: BoxFit.cover,),
             );
@@ -46,8 +46,8 @@ class _BannerWidgetState extends State<BannerWidget> {
           enableInfiniteScroll: true,
           reverse: false,
           autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
           enlargeCenterPage: true,
           enlargeFactor: 0.3,
