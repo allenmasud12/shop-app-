@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/controllers/auth_controller.dart';
 import 'package:shop_app/views/screens/auth/registration_screen.dart';
+import 'package:shop_app/views/screens/main_screen.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
 import '../../../widgets/input_text.dart';
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (res == 'success') {
         Get.snackbar("Login Success", "You are now logged in",
             backgroundColor: Colors.blue);
-        Get.to(() => const HomeScreen());
+        Get.to(() => const MainScreen());
       } else {
         Get.snackbar("Error Occurred", res.toString(),
             backgroundColor: Colors.red);
