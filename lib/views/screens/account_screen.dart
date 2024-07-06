@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/constants.dart';
+import 'package:shop_app/views/screens/auth/login_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference buyers = FirebaseFirestore.instance.collection('buyers');
+    CollectionReference buyers =
+        FirebaseFirestore.instance.collection('buyers');
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -35,7 +37,6 @@ class AccountScreen extends StatelessWidget {
           future: buyers.doc(_auth.currentUser!.uid).get(),
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
             if (snapshot.hasError) {
               return Text("Something went wrong");
             }
@@ -45,8 +46,9 @@ class AccountScreen extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-              return  SingleChildScrollView(
+              Map<String, dynamic> data =
+                  snapshot.data!.data() as Map<String, dynamic>;
+              return SingleChildScrollView(
                 child: Center(
                   child: Column(
                     children: [
@@ -80,65 +82,58 @@ class AccountScreen extends StatelessWidget {
                       Container(
                         width: 200,
                         child: ElevatedButton(
-                          onPressed: (){
-
-                          },
+                          onPressed: () {},
                           child: Text("Edit Profile"),
                         ),
                       ),
-                      Divider(thickness: 2,color: Colors.grey,),
-
+                      Divider(
+                        thickness: 2,
+                        color: Colors.grey,
+                      ),
                       ListTile(
                         leading: Icon(Icons.settings),
                         title: Text('Settings'),
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                       ),
-
                       ListTile(
                         leading: Icon(Icons.phone),
                         title: Text('Phone'),
                         subtitle: Text("+88016901645441"),
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                       ),
-
                       ListTile(
                         leading: Icon(Icons.shopping_bag),
                         title: Text('Cart'),
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                       ),
-
                       ListTile(
                         leading: Icon(Icons.shopping_cart),
                         title: Text('Orders'),
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                       ),
-
                       ListTile(
                         leading: Icon(Icons.logout),
-                        title: Text('Logout',style: TextStyle(color: Colors.red),),
-                        onTap: () {
-
+                        title: Text(
+                          'Logout',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        onTap: () async {
+                          await _auth.signOut().whenComplete(() {
+                            return Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
+                          });
                         },
                       ),
-
                     ],
                   ),
                 ),
               );
-
             }
 
             return Center(child: Text("loading"));
           },
-        )
-        );
+        ));
   }
 }
