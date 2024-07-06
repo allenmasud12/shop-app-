@@ -8,7 +8,7 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference buyers = FirebaseFirestore.instance.collection('users');
+    CollectionReference buyers = FirebaseFirestore.instance.collection('buyers');
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -58,7 +58,7 @@ class AccountScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "ss",
+                          data["username"],
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class AccountScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "test@gmail.com",
+                          data["email"],
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class AccountScreen extends StatelessWidget {
 
             }
 
-            return Text("loading");
+            return Center(child: Text("loading"));
           },
         )
         );
